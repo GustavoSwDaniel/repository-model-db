@@ -1,0 +1,16 @@
+Metadata-Version: 2.1
+Name: modelspackage
+Version: 0.0.2
+Summary: Models
+Author: Gustavo
+Author-email: <gustavodanieldetoledo@gmail.com.com>
+License: MIT
+Keywords: python
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: Unix
+Classifier: Operating System :: MacOS :: MacOS X
+Classifier: Operating System :: Microsoft :: Windows
+
+UNKNOWN
+
