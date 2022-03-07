@@ -6,7 +6,7 @@ HERE = pathlib.Path(__file__).parent
 # The text of the README file
 README = (HERE / "README.md").read_text()
 
-VERSION = '0.1.11'
+VERSION = '0.1.12'
 DESCRIPTION = 'repository-model-db'
 LONG_DESCRIPTION = 'Models'
 #
