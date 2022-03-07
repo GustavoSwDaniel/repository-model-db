@@ -14,7 +14,7 @@ LONG_DESCRIPTION = 'Models'
 setup( 
     name="repository-model-db",
     version=VERSION,
-    author="Gustavo",
+    author="GustavoSwDaniel",
     author_email="<gustavodanieldetoledo@gmail.com.com>",
     description=DESCRIPTION,
     long_description=README,
