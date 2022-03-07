@@ -1,4 +1,4 @@
 import os
 
-FILE_MODULES=None
+DIR_MODELS=None
 DIR=os.getcwd()
