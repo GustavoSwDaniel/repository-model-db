@@ -1,12 +1,10 @@
-from pydoc import cli
 from typing import List
-from webbrowser import get
 import click
 from pathlib import Path
 import os
 from mako.template import Template
 import shutil
-from config import FOLDER_MODULES
+from src.config import FOLDER_MODULES
 
 dir = os.getcwd()
 
@@ -23,7 +21,8 @@ def init_repository():
 
 def create_config_file():
     Path(dir + '/repository/config.py').touch(exist_ok=True)
-    mytemplate = Template(filename=os.getcwd()+'/src/template/config.mako')
+    print(dir)
+    mytemplate = Template(filename=str(Path(os.path.abspath(__file__)).parents[1]) + '/templates/config.mako')
     with open('repository/config.py', 'w') as out_file:
         out_file.write(mytemplate.render())
 
@@ -34,7 +33,7 @@ def generate_repository():
     get_file_models()
 
 def get_config_file():
-    shutil.copyfile(dir + '/repository/config.py', 'config.py')
+    shutil.copyfile(str(Path(os.path.abspath(__file__)).parents[1]) + '/repository/config.py', 'config.py')
 
 
 def get_class_line(path: str):
@@ -67,7 +66,7 @@ def get_file_models():
 
 
 def create_repository(models_name : List):
-    mytemplate = Template(filename='src/templates/repositoriy.mako')
+    mytemplate = Template(filename=str(Path(os.path.abspath(__file__)).parents[1]) + 'templates/repositoriy.mako')
 
     for name in models_name:
         f = open(dir + f'/repository/repositories/{name}Repository.py', 'x')
