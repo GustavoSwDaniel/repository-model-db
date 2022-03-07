@@ -6,7 +6,7 @@ HERE = pathlib.Path(__file__).parent
 # The text of the README file
 README = (HERE / "README.md").read_text()
 
-VERSION = '0.1.5'
+VERSION = '0.1.9'
 DESCRIPTION = 'repository-model-db'
 LONG_DESCRIPTION = 'Models'
 #
@@ -28,7 +28,7 @@ setup(
         ],
     },
     keywords=['python'],
-    packages=["src", "src.repositories", "src.cli"],
+    packages=["src", "src.repositories", "src.cli", "src.templates"],
     include_package_data=True,
     classifiers=[
         "Programming Language :: Python :: 3",
