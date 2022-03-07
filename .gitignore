@@ -30,3 +30,5 @@ Pipfile
 .coverage
 coverage.json
 htmlcov
+dist
+repository_model_db.egg-info
