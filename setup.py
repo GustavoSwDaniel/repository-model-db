@@ -19,6 +19,7 @@ setup(
     description=DESCRIPTION,
     long_description=README,
     license="MIT",
+    url='https://github.com/GustavoSwDaniel/repository-model-db',
     install_requires=['SQLAlchemy', 'alembic', 'psycopg2-binary', 'wheel', 'Mako', 'click'],
     entry_points= {
     'console_scripts': [
