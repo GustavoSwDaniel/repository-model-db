@@ -1,10 +1,10 @@
-from typing import List
-import click
-from pathlib import Path
 import os
+from pathlib import Path
+from typing import List
+
+import click
 from mako.template import Template
-import shutil
-from src.config import FOLDER_MODULES
+from src.config import DIR_MODELS
 
 dir = os.getcwd()
 
@@ -33,7 +33,12 @@ def generate_repository():
     get_file_models()
 
 def get_config_file():
-    shutil.copyfile(str(Path(os.path.abspath(__file__)).parents[1]) + '/repository/config.py', 'config.py')
+    with open(str(Path(os.path.abspath(__file__)).parents[1]) + '/config.py', 'r+') as file:
+        file.seek(0)
+        file.truncate()
+        with open(dir + '/repository/config.py', 'r+') as config_file:
+            for line in config_file:
+                file.write(line)
 
 
 def get_class_line(path: str):
@@ -58,18 +63,21 @@ def get_models_name(class_names: List):
 
 
 def get_file_models():
-    if FOLDER_MODULES:
-        path = Path(FOLDER_MODULES)
+    if DIR_MODELS:
+        path = Path(DIR_MODELS)
         models_name = get_class_line(path=path)
         create_repository(models_name=models_name)
 
 
 
 def create_repository(models_name : List):
-    mytemplate = Template(filename=str(Path(os.path.abspath(__file__)).parents[1]) + 'templates/repositoriy.mako')
+    mytemplate = Template(filename=str(Path(os.path.abspath(__file__)).parents[1]) + '/templates/repositoriy.mako')
 
     for name in models_name:
-        f = open(dir + f'/repository/repositories/{name}Repository.py', 'x')
+        try:
+            f = open(dir + f'/repository/repositories/{name}Repository.py', 'x')
 
-        with open(dir + f'/repository/repositories/{name}Repository.py', 'w') as file:
-            file.write(mytemplate.render(model_name=name))
+            with open(dir + f'/repository/repositories/{name}Repository.py', 'w') as file:
+                file.write(mytemplate.render(model_name=name))
+        except FileExistsError:
+            pass
