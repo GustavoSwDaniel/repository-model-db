@@ -1,0 +1,3 @@
+[console_scripts]
+generate-repo = src.cli.commands:generate_repository
+init-repo = src.cli.commands:init_repository
