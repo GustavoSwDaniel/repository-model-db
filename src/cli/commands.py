@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from typing import List
+from typing import List, Dict
 
 import click
 from mako.template import Template
@@ -41,43 +41,52 @@ def get_config_file():
                 file.write(line)
 
 
-def get_class_line(path: str):
+def get_file_models_line(path: str):
     files = [x for x in path.iterdir() if x.is_file()]
-    class_names = []
+    file_path = []
     for file in files:
         with file.open() as f:
             for line in f:
-                if 'db.Model' in line:
-                    class_names.append(line)
+                if '__tablename__' in line:
+                    file_path.append(str(file))
 
-    
-    return get_models_name(class_names=class_names)
+    return get_class_names(path_models=file_path)
+
+def get_class_names(path_models: List):
+    imports_models = {}
+    for path_file in path_models:
+        with open(path_file, 'r+') as file:
+            for line in file:
+                if '(Base)' in line or ',Base)' in line or '(Base,' in line:
+                    string_import = generate_import(path=path_file.split('site-packages/')[1])
+                    imports_models[get_models_name(class_model=line)] = string_import.replace('.py', '')
+
+    return  imports_models
+
+def get_models_name(class_model: str):
+    return class_model.split(' ')[1].split('(')[0]
 
 
-def get_models_name(class_names: List):
-    models_name = []
-    for model in class_names:
-        models_name.append(model.split(' ')[1].split('(')[0])
-
-    return models_name
-
+def generate_import(path: str):
+    path = path.split('/')
+    return '.'.join(path)
 
 def get_file_models():
     if DIR_MODELS:
         path = Path(DIR_MODELS)
-        models_name = get_class_line(path=path)
-        create_repository(models_name=models_name)
+        data_models = get_file_models_line(path=path)
+        print(data_models)
+        create_repository(data_models)
 
-
-
-def create_repository(models_name : List):
+def create_repository(data_models: Dict):
     mytemplate = Template(filename=str(Path(os.path.abspath(__file__)).parents[1]) + '/templates/repositoriy.mako')
 
-    for name in models_name:
+    for key, item in data_models.items():
+        print(key, '.', item)
         try:
-            f = open(dir + f'/repository/repositories/{name}Repository.py', 'x')
+            f = open(dir + f'/repository/repositories/{key}Repository.py', 'x')
 
-            with open(dir + f'/repository/repositories/{name}Repository.py', 'w') as file:
-                file.write(mytemplate.render(model_name=name))
+            with open(dir + f'/repository/repositories/{key}Repository.py', 'w') as file:
+                file.write(mytemplate.render(model_name=key, imports=item))
         except FileExistsError:
             pass
