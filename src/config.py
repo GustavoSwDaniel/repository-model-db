@@ -1,4 +1,5 @@
 import os
+import src.models
 
-DIR_MODELS='/Users/gustavotoledo/shipay/shipay-api-models/shipay_api/models'
-DIR=os.getcwd()
+DIR_MODELS = os.path.dirname(os.path.abspath(src.models.__file__))
+DIR = os.getcwd()
