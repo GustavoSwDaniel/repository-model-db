@@ -17,7 +17,7 @@ $ repo-init
 
 **repo-init**
 
-This command create a folder of root directory of your project with a file to configurations directory os models of your database and create a folder where the repository files will be created
+This command create a folder of root directory of your project with a file to configurations directory os models of your database and create a folder where the repository files will be create
 
 ```shell
 $ generate-repo
